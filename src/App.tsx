@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import Navbar from './Components/Navbar'
 
 function App() {
   return <>
-    This is Typescript Project :
+   <Navbar/>
+    This is Typescript Project 
    </>
 }
 
