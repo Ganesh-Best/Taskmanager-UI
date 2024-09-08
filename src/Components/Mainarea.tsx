@@ -8,6 +8,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import Axios from 'axios'
 import useCreateTodo from './useCreateTodo';
 import CircularProgress from '@mui/material/CircularProgress';
+import useFetchTodo from './useFetchTodo';
 
 
 function Mainarea() {
@@ -52,23 +53,40 @@ function Addtodo(){
 }
 
 function Showtodo(){
+
+  const {error,loading,todos} = useFetchTodo();
+
+
+  if(loading)
+    return <div style={{width:"50rem",marginTop:'60px'}}>
+
+      <div style={{}}>
+         <Typography variant="h4" color="initial">Todo Lists</Typography>
+      </div>
+  <CircularProgress sx={{marginLeft:'70px',marginTop:'40px'}}/>    
+    </div> 
+  
+   if(todos)      
     return  <div style={{width:"50rem",marginTop:'60px'}}>
       <div style={{}}>
       <Typography variant="h4" color="initial">Todo Lists</Typography>
       </div>
-
-      <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
-      <div style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
-         <Typography variant="body1" color="white" sx={{fontSize:"1.4rem"}}>
-         study : "I have to complete MERN stack projects "
-         </Typography>   
-      </div>
-      
-      <Button variant="contained" color="primary" style={{padding:"10px",height:"105px"}}>
-          <DeleteForeverOutlinedIcon/>
-        </Button> 
-      
+     {todos.map((todo,index)=>(
+    <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
+    <div key={index} style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
+       <Typography variant="body1" color="white" sx={{fontSize:"1.4rem"}}>
+       {todo.title} : {todo.description}
+       </Typography>   
     </div>
+    
+    <Button variant="contained" color="primary" style={{padding:"10px",height:"105px"}}>
+        <DeleteForeverOutlinedIcon/>
+      </Button>       
+  </div>
+
+     ))}
+    
+     
       
     </div>
 }
