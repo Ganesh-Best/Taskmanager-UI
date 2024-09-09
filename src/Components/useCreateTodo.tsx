@@ -1,6 +1,6 @@
 import React, { useState ,useEffect} from 'react'
 import Axios from 'axios';
-import {BASE_URL} from './backend'
+import {BASE_URL,TOKEN} from './backend'
 
 // this is custom hook that return createTodo function ,error and loading
 //createTodo function require two argument title and description for creating todo;  
@@ -16,10 +16,10 @@ function useCreateTodo() {
      const response  =  await Axios.post(`${BASE_URL}/todo/todo`,{title,description},{
            headers:{
              'Content-Type': 'application/json',
-             'token':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2UwM2I3ODRkNDhiYTdkZTFlZmZjZiIsImlhdCI6MTcyNTc5Mjk4NCwiZXhwIjoxNzI1ODc5Mzg0fQ.1bPAy7WrpqsjiRAc8--2UTsWN-zVkqLwXOtGQfpoIos'
+             'token':TOKEN
            }
           }) 
-          console.log(response.data);
+          
          return response.data ;
    } catch (error) {
     console.log("error",error);

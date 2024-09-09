@@ -9,6 +9,7 @@ import Axios from 'axios'
 import useCreateTodo from './useCreateTodo';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetchTodo from './useFetchTodo';
+import useDeleteTodo from './useDeleteTodo';
 
 
 function Mainarea() {
@@ -56,6 +57,16 @@ function Showtodo(){
 
   const {error,loading,todos} = useFetchTodo();
 
+  const {error1,loading1,deleteTodo}  = useDeleteTodo() ;
+
+  const deleteHandler = (e,id)=>{
+      
+    console.log('delete Handler clicked :')
+      deleteTodo(id)
+     console.log("event object", e)
+  }
+  if(error1)
+    alert('unable to delete Todo');
 
   if(loading)
     return <div style={{width:"50rem",marginTop:'60px'}}>
@@ -71,15 +82,15 @@ function Showtodo(){
       <div style={{}}>
       <Typography variant="h4" color="initial">Todo Lists</Typography>
       </div>
-     {todos.map((todo,index)=>(
+     {todos.map((todo,key)=>(
     <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
-    <div key={index} style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
+    <div key={key} style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
        <Typography variant="body1" color="white" sx={{fontSize:"1.4rem"}}>
        {todo.title} : {todo.description}
        </Typography>   
     </div>
     
-    <Button variant="contained" color="primary" style={{padding:"10px",height:"105px"}}>
+    <Button variant="contained" onClick={e=>deleteHandler(e,todo._id)} color="primary" style={{padding:"10px",height:"105px"}}>
         <DeleteForeverOutlinedIcon/>
       </Button>       
   </div>
