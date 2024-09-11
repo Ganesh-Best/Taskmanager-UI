@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Typography from '@mui/material/Typography';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import Axios from 'axios'
+
 import useCreateTodo from './useCreateTodo';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetchTodo from './useFetchTodo';
@@ -55,15 +55,17 @@ function Addtodo(){
 
 function Showtodo(){
 
-  const {error,loading,todos} = useFetchTodo();
+  let {error,loading,todos,fetchTodos} = useFetchTodo();
 
   const {error1,loading1,deleteTodo}  = useDeleteTodo() ;
+ 
+  const [reload,setReload] = useState(false);
 
-  const deleteHandler = (e,id)=>{
+  const deleteHandler = (id : string)=>{
       
-    console.log('delete Handler clicked :')
-      deleteTodo(id)
-     console.log("event object", e)
+       deleteTodo(id)
+       fetchTodos();
+      
   }
   if(error1)
     alert('unable to delete Todo');
@@ -85,12 +87,12 @@ function Showtodo(){
      {todos.map((todo,key)=>(
     <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
     <div key={key} style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
-       <Typography variant="body1" color="white" sx={{fontSize:"1.4rem"}}>
+       <Typography variant="body1" color="white" sx={{fontSize:"1.4rem",textDecoration:todo.completed?'line-through':'none'}}>
        {todo.title} : {todo.description}
        </Typography>   
     </div>
     
-    <Button variant="contained" onClick={e=>deleteHandler(e,todo._id)} color="primary" style={{padding:"10px",height:"105px"}}>
+    <Button variant="contained" onClick={e=>deleteHandler(todo._id)} color="primary" style={{padding:"10px",height:"105px"}}>
         <DeleteForeverOutlinedIcon/>
       </Button>       
   </div>

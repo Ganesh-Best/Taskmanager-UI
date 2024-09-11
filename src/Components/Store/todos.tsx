@@ -1,5 +1,6 @@
 import {atom}  from 'recoil';
 
-export todos = atom({
-    
+export const todos = atom({
+    key:'todos',
+    default:[]
 })

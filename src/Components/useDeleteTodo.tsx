@@ -6,7 +6,7 @@ function useDeleteTodo() {
     const  [loading1,setloading] =useState(false);
     const [error1,setError] = useState(false);
   
-    const deleteTodo = async(id : 'string')=>{
+    const deleteTodo = async(id : string)=>{
           setloading(true)
                 try {
                     

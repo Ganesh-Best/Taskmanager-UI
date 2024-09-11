@@ -33,7 +33,7 @@ function useFetchTodo() {
   
   
   return {
-       todos,error,loading
+       todos,error,loading ,fetchTodos 
   }
 }
 
