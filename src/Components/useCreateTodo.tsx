@@ -1,12 +1,13 @@
 import React, { useState ,useEffect} from 'react'
 import Axios from 'axios';
 import {BASE_URL,TOKEN} from './backend'
+import useFetchTodo from './useFetchTodo';
 
 // this is custom hook that return createTodo function ,error and loading
 //createTodo function require two argument title and description for creating todo;  
 function useCreateTodo() {
-    
-    const [loading ,setLoading] = useState(false);
+    const {fetchTodos} = useFetchTodo(); 
+    const [loading ,setLoading] = useState(false); 
     const [error,setError] = useState(false);
 
     const createTodo = async(title: string,description: string)=>{
@@ -19,7 +20,7 @@ function useCreateTodo() {
              'token':TOKEN
            }
           }) 
-          
+          fetchTodos();
          return response.data ;
    } catch (error) {
     console.log("error",error);

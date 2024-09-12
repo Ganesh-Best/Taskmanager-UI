@@ -10,8 +10,13 @@ import useCreateTodo from './useCreateTodo';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetchTodo from './useFetchTodo';
 import useDeleteTodo from './useDeleteTodo';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { todos } from './Store/todos';
 
-
+interface todo {
+  title:string;
+  description:string;
+}
 function Mainarea() {
   return (
     <div>
@@ -22,16 +27,19 @@ function Mainarea() {
 }
 
 function Addtodo(){
-
+    const {fetchTodos} = useFetchTodo()
     const [title,setTitle] =useState<string>("");
     const [description,setDescription] = useState<string>("");
     const {createTodo,error,loading}    =   useCreateTodo();
-    
+    const setTodos = useSetRecoilState(todos)
     console.log('Before click on add todo :',error) 
     const addTodo = ()=>{
       
-      if(title && description)
+      if(title && description){
        createTodo(title,description);
+       //@ts-ignore
+       
+      }
       
       setTitle('');
       setDescription('');
@@ -54,23 +62,25 @@ function Addtodo(){
 }
 
 function Showtodo(){
+   
+   useFetchTodo();
 
-  let {error,loading,todos,fetchTodos} = useFetchTodo();
+  const TODOS = useRecoilValue(todos);
+   
+  
 
   const {error1,loading1,deleteTodo}  = useDeleteTodo() ;
  
-  const [reload,setReload] = useState(false);
 
   const deleteHandler = (id : string)=>{
-      
-       deleteTodo(id)
-       fetchTodos();
-      
+    
+        deleteTodo(id)
+
   }
   if(error1)
     alert('unable to delete Todo');
 
-  if(loading)
+  if(loading1)
     return <div style={{width:"50rem",marginTop:'60px'}}>
 
       <div style={{}}>
@@ -79,14 +89,14 @@ function Showtodo(){
   <CircularProgress sx={{marginLeft:'70px',marginTop:'40px'}}/>    
     </div> 
   
-   if(todos)      
+   if(TODOS)      
     return  <div style={{width:"50rem",marginTop:'60px'}}>
       <div style={{}}>
       <Typography variant="h4" color="initial">Todo Lists</Typography>
       </div>
-     {todos.map((todo,key)=>(
-    <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
-    <div key={key} style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
+     {TODOS.map((todo,key)=>(
+    <div key={key} style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
+    <div  style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
        <Typography variant="body1" color="white" sx={{fontSize:"1.4rem",textDecoration:todo.completed?'line-through':'none'}}>
        {todo.title} : {todo.description}
        </Typography>   

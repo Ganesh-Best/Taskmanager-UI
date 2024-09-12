@@ -1,9 +1,11 @@
 import React, { useState ,useEffect } from 'react'
 import Axios from 'axios';
 import { BASE_URL,TOKEN } from './backend';
+import { todos } from './Store/todos';
+import { useSetRecoilState } from 'recoil';
 
 function useFetchTodo() {
-   const [todos,setTodos] = useState([]);
+   const setTodos = useSetRecoilState(todos);
    const [error,setError] = useState(false);
    const [loading,setLoading] = useState(true);
   
@@ -33,7 +35,7 @@ function useFetchTodo() {
   
   
   return {
-       todos,error,loading ,fetchTodos 
+     error,loading ,fetchTodos 
   }
 }
 
