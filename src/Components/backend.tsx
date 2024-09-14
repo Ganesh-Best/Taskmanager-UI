@@ -1,2 +1,2 @@
 export const BASE_URL = 'http://localhost:80';
-export const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2UwM2I3ODRkNDhiYTdkZTFlZmZjZiIsImlhdCI6MTcyNjE1ODczOCwiZXhwIjoxNzI2MjQ1MTM4fQ.ZMx9viTmT27TG4ypISNXkZGns4Bu51Pi3sdrh6Y4xWQ';
+export const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Y2UwM2I3ODRkNDhiYTdkZTFlZmZjZiIsImlhdCI6MTcyNjMyODA5MiwiZXhwIjoxNzI2NDE0NDkyfQ.lt2yhjpyyBYnZAqzsdVGS9EG4qx4mSIF3NBtQtHzs-s';
