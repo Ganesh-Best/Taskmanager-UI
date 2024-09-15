@@ -13,6 +13,7 @@ import useDeleteTodo from './useDeleteTodo';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { todos } from './Store/todos';
 import useRemoveTodos from './useRemoveTodos';
+import { countTodo } from './Selectors/counTodo';
 
 
 interface todo {
@@ -35,6 +36,7 @@ function Addtodo(){
     const [description,setDescription] = useState<string>("");
     const {createTodo,error,loading}    =   useCreateTodo();
     const setTodos = useSetRecoilState(todos)
+    const  totalTodos = useRecoilValue(countTodo);
     console.log('Before click on add todo :',error) 
    
     const addTodo = ()=>{
@@ -54,7 +56,10 @@ function Addtodo(){
 
    const removeAllTodos = ()=>{
      console.log('remove button pressed :');
-     removeTodos();
+   
+     //If there  task are there  then it will delete otherwise not:
+     if(totalTodos)
+      removeTodos();
 
    }
  
