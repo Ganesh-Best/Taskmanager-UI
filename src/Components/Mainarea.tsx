@@ -14,6 +14,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { todos } from './Store/todos';
 import useRemoveTodos from './useRemoveTodos';
 import { countTodo } from './Selectors/counTodo';
+import Navbar from './Navbar';
 
 
 interface todo {
@@ -23,6 +24,7 @@ interface todo {
 function Mainarea() {
   return (
     <div>
+      <Navbar/>
       <Addtodo/>
       <Showtodo/>
     </div>
