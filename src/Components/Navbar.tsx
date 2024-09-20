@@ -11,6 +11,14 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Stack from '@mui/material/Stack';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { userInfo } from './Store/user';
+import { email, name } from './Selectors/user';
+import Button from '@mui/material/Button'
+import { useNavigate} from 'react-router-dom';
+import useSetDetails from './useSetDetails';
+import { darkMode } from './Store/theme';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 
 
@@ -76,7 +84,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         opacity: 1,
         backgroundColor: 'white', //#aab4be
         ...theme.applyStyles('dark', {
-          backgroundColor: 'blue', //#8796A5
+          backgroundColor: 'white', //#8796A5
         }),
       },
     },
@@ -114,19 +122,80 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 
 function Navbar() {
+  // If we refesh set user details with vanished , so we need to set it if page got refreshed  
+    useSetDetails(); 
+   const  setMode = useSetRecoilState(darkMode);
+   const navigate =  useNavigate()    
+   const Email = useRecoilValue(email);
+   const Name = useRecoilValue(name);
+ 
+   const signOutHandler = ()=>{
+
+       localStorage.removeItem('userInfo');
+       navigate('/signin')
+
+   }
+
+  const mode = useRecoilValue(darkMode)
+
+  const darkTheme =createTheme({
+    palette: {
+      mode: (mode)?'dark':'light',
+      primary: {
+        main: '#1976d2',
+      },
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            // fontSize: "1.2rem", // Increase button font size
+             padding: "10px 20px", // Custom padding
+             borderRadius: 20, // Rounded corners for the button
+            backgroundColor: mode ? 'black' : '#1976d2', // Dark mode and light mode background
+            color:  mode ? '#ffffff' : '#ffffff', // White text for both modes
+            transition: '0.3s', // Smooth transition on hover
+            '&:hover': {
+             backgroundColor: mode ? 'lightblack' : '#1565c0', // Different hover color based on mode
+             boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)'
+            },
+          })
+        }
+      }
+
+    }
+    
+  })
+
+  const changeMode = ()=>{
+    setMode(prev=>!prev);
+    
+    if(!mode)
+    document.body.style.backgroundColor="#171717";
+    else
+    document.body.style.backgroundColor="white";
+  
+  }
+
   return (
     <div>
-        
-      <AppBar position="static">
-        <Toolbar>
+      <ThemeProvider theme={darkTheme}>  
+       <AppBar position="static">
+        <Toolbar sx={{display:"flex",flexWrap:"wrap"}}>
             
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' } }}
           >
             Task Manager 
+          </Typography>
+          <Typography
+            variant="h6"
+            component={"div"}
+          > Welcome ,
+            {Name}
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -139,14 +208,18 @@ function Navbar() {
           </Search>
           <FormGroup>
             <FormControlLabel
-            control={<MaterialUISwitch sx={{ m: 1 }}  />}
+            control={<MaterialUISwitch onClick={changeMode} sx={{ m: 1 }}  />}
             label=""
             />
             
           </FormGroup>
+          <Button variant="contained"  onClick={signOutHandler} color="primary">
+             Sign out
+          </Button>
 
         </Toolbar>
-      </AppBar>
+       </AppBar>
+      </ThemeProvider>
     </div>
   )
 }

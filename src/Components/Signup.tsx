@@ -25,7 +25,8 @@ function Signup() {
         
          if(password === cpassword)
          signup({name,email,password});
-
+  
+         //it will change key , that will lead re-render this alert components:
          setKey(key+1)
     }
 

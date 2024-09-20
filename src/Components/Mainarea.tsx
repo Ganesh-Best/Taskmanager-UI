@@ -15,6 +15,8 @@ import { todos } from './Store/todos';
 import useRemoveTodos from './useRemoveTodos';
 import { countTodo } from './Selectors/counTodo';
 import Navbar from './Navbar';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { darkMode } from './Store/theme';
 
 
 interface todo {
@@ -40,6 +42,62 @@ function Addtodo(){
     const setTodos = useSetRecoilState(todos)
     const  totalTodos = useRecoilValue(countTodo);
     console.log('Before click on add todo :',error) 
+
+    const mode = useRecoilValue(darkMode);
+    const darkTheme =createTheme({
+      palette: {
+        mode: (mode)?'dark':'light',
+        primary: {
+          main: '#1976d2',
+        },
+      },
+      components: {
+        MuiButton: {
+          styleOverrides: {
+            root: ({ theme }) => ({
+              // fontSize: "1.2rem", // Increase button font size
+               padding: "10px 20px", // Custom padding
+               borderRadius: 20, // Rounded corners for the button
+              backgroundColor: mode ? 'black' : '#1976d2', // Dark mode and light mode background
+              color:  mode ? '#ffffff' : '#ffffff', // White text for both modes
+              transition: '0.3s', // Smooth transition on hover
+              '&:hover': {
+               backgroundColor: mode ? 'lightblack' : '#1565c0', // Different hover color based on mode
+               boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.5)'
+              },
+              
+            })
+          }
+        },
+        MuiTextField:{
+          styleOverrides:{
+            root:{
+                   '& .MuiInputBase-root': {
+                  backgroundColor: mode ? '#171717' : 'white', // Background color of the text box
+                  color: mode ? 'white' : '#171717', // Text color in dark mode
+                },
+                '& .MuiInputLabel-root': {
+                  color: mode ? 'white' : '#1565c0', // Label color in dark mode
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: mode ? 'black' : '#1565c0', // Border color in dark mode
+                  },
+                  '&:hover fieldset': {
+                    borderColor: mode ? '#171717' : 'white', // Hover effect border color
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: mode ? '#171717' : 'white', // Focused state border color
+                  },
+                }
+            }
+          } 
+        }
+  
+      }
+      
+    })
+
    
     const addTodo = ()=>{
       
@@ -67,6 +125,7 @@ function Addtodo(){
  
 
     return <div style={{marginTop:"20px"}}>
+      <ThemeProvider theme={darkTheme}>
      <TextField onChange={e=>setTitle(e.target.value)} value={title} id="outlined-basic" label="Title" variant="outlined" />
      <TextField onChange={e=>setDescription(e.target.value)} value={description} id="outlined-basic" label="Description" variant="outlined" />
      <Button onClick={addTodo} variant="contained" color="primary" style={{height:'54px', maxHeight:'auto'}}>
@@ -75,6 +134,7 @@ function Addtodo(){
      <Button variant="contained" color="primary" onClick={removeAllTodos} style={{height:'54px'}}>
        {load?<CircularProgress color='white'/>:'Delete All'}       
      </Button>
+     </ThemeProvider>
     </div>
 }
 

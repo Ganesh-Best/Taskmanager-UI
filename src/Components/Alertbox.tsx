@@ -3,7 +3,7 @@ import Alert from '@mui/material/Alert';
 
 function Alertbox({msg}) {
  
-  const [show,setShow] = useState(true);
+  const [show,setShow] = useState();
  
   const style = {
     marginTop:'20px',

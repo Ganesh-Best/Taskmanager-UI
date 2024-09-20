@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import { BASE_URL,TOKEN } from './backend';
+import { BASE_URL } from './backend';
 
 function useSignup() {
 
@@ -15,21 +15,23 @@ function useSignup() {
         const response  =  await Axios.post(`${BASE_URL}/auth/signup`,{
                 name,email,password,mobile:8368788356,
              },{headers:{
-                token:TOKEN
+             'Content-Type':'application/json'
              }})
                   
               if(response.status == 201)
                 setMsg('Signup has been done successfully')
                
-              console.log('response block:' ,response)
+              
      
     } catch (e) {
-
+        console.log('error ',e)
         if(e.status == 411)
          setMsg('All fields are required ')
         else if(e.status == 302)
-         setMsg('User already exists:')    
-
+         setMsg('User already exists:')
+        else if(e.code == 'ERR_NETWORK')
+         setMsg('No internet  connection:');    
+        
     }finally{
         setLoading(false);
     }

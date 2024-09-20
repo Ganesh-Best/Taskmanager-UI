@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-import { BASE_URL,TOKEN } from './backend';
+import { BASE_URL} from './backend';
 import useFetchTodo from './useFetchTodo';
 
 
@@ -9,7 +9,7 @@ function useRemoveTodos() {
    const {fetchTodos} = useFetchTodo();
 
    const [load,setLoad] =useState(false);
-
+   const TOKEN =   localStorage.getItem('token');
     const removeTodos = async()=>{
                       
           try {

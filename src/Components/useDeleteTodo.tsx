@@ -1,13 +1,13 @@
 import  Axios  from 'axios';
 import React, { useState ,useEffect} from 'react'
-import { BASE_URL,TOKEN } from './backend';
+import { BASE_URL } from './backend';
 import useFetchTodo from './useFetchTodo';
 
 function useDeleteTodo() {
     const {fetchTodos} = useFetchTodo();
     const [loading1,setloading] =useState(false);
     const [error1,setError] = useState(false);
-  
+    const TOKEN =   localStorage.getItem('token');
     const deleteTodo = async(id : string)=>{
           setloading(true)
                 try {
@@ -15,7 +15,7 @@ function useDeleteTodo() {
            const response = await Axios.patch(`${BASE_URL}/todo/todo/${id}/done`,{},{headers:{
                     token:TOKEN
                 }})
-                
+
                fetchTodos();
                
               } catch (error) {
