@@ -6,14 +6,18 @@ import Signin from './Components/Signin';
 import {Route,Routes,} from 'react-router-dom';
 
 function App() {
+  
+  const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
+    
+
   return <>
    {/* <Navbar/>
    <Mainarea/> */}
-   
+
    <Routes>
       <Route path='/signup' element={<Signup/>} ></Route>
       <Route path='/signin' element={<Signin/>} ></Route>
-      <Route path='/todo' element={<Mainarea/>} ></Route>
+      <Route path='/' element={userInfo?<Mainarea/>:<Signin/>} ></Route>
    </Routes>
    </>
 }

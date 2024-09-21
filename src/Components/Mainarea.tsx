@@ -11,12 +11,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useFetchTodo from './useFetchTodo';
 import useDeleteTodo from './useDeleteTodo';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { todos } from './Store/todos';
+import { searchQuery, todos } from './Store/todos';
 import useRemoveTodos from './useRemoveTodos';
 import { countTodo } from './Selectors/counTodo';
 import Navbar from './Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { darkMode } from './Store/theme';
+
+import usefilterTodo from './usefilterTodo';
 
 
 interface todo {
@@ -139,14 +141,16 @@ function Addtodo(){
 }
 
 function Showtodo(){
-
+          usefilterTodo();             
   const mode = useRecoilValue(darkMode)
    
    useFetchTodo();
 
   const TODOS = useRecoilValue(todos);
    
-  
+  const searchValue = useRecoilValue(searchQuery);
+
+  console.log('search Value',searchValue);
 
   const {error1,loading1,deleteTodo}  = useDeleteTodo() ;
  

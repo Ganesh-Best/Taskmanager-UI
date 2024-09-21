@@ -26,7 +26,7 @@ function useSignin(){
               }) 
               //Navigate to Todo page ,after 1 sec of login msg : 
               setTimeout(() => {
-                    navigate('/todo')
+                    navigate('/')
               }, 1000);
     
         }

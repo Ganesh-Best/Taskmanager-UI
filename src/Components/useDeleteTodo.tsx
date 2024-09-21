@@ -7,7 +7,12 @@ function useDeleteTodo() {
     const {fetchTodos} = useFetchTodo();
     const [loading1,setloading] =useState(false);
     const [error1,setError] = useState(false);
-    const TOKEN =   localStorage.getItem('token');
+    const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
+    let TOKEN : string ;
+    
+    if(userInfo)
+       TOKEN = userInfo.token;
+    
     const deleteTodo = async(id : string)=>{
           setloading(true)
                 try {

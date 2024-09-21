@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,6 +19,7 @@ import { useNavigate} from 'react-router-dom';
 import useSetDetails from './useSetDetails';
 import { darkMode } from './Store/theme';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { searchQuery } from './Store/todos';
 
 
 
@@ -124,6 +125,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 function Navbar() {
   // If we refesh set user details with vanished , so we need to set it if page got refreshed  
     useSetDetails(); 
+   const  setQuery =  useSetRecoilState(searchQuery);
    const  setMode = useSetRecoilState(darkMode);
    const navigate =  useNavigate()    
    const Email = useRecoilValue(email);
@@ -204,8 +206,10 @@ function Navbar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={e=>setQuery(e.target.value)}
             />
           </Search>
           <FormGroup>
