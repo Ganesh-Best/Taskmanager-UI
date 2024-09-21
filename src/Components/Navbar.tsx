@@ -133,6 +133,8 @@ function Navbar() {
 
        localStorage.removeItem('userInfo');
        navigate('/signin')
+       setMode(false);
+       document.body.style.backgroundColor = "white";
 
    }
 
@@ -174,7 +176,7 @@ function Navbar() {
     document.body.style.backgroundColor="#171717";
     else
     document.body.style.backgroundColor="white";
-  
+
   }
 
   return (

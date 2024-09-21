@@ -9,7 +9,13 @@ function useRemoveTodos() {
    const {fetchTodos} = useFetchTodo();
 
    const [load,setLoad] =useState(false);
-   const TOKEN =   localStorage.getItem('token');
+   
+   const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
+    let TOKEN : string ;
+    
+    if(userInfo)
+       TOKEN = userInfo.token;
+
     const removeTodos = async()=>{
                       
           try {

@@ -9,7 +9,11 @@ function useFetchTodo() {
    const [error,setError] = useState(false);
    const [loading,setLoading] = useState(true);
     
-   const TOKEN  = localStorage.getItem('token'); 
+   const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
+    let TOKEN : string ;
+    
+    if(userInfo)
+       TOKEN = userInfo.token;
     
     const  fetchTodos = async()=>{
          

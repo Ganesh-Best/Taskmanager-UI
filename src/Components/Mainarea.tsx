@@ -139,6 +139,8 @@ function Addtodo(){
 }
 
 function Showtodo(){
+
+  const mode = useRecoilValue(darkMode)
    
    useFetchTodo();
 
@@ -167,24 +169,24 @@ function Showtodo(){
     </div> 
   
   if(!TODOS.length)
-    return <div style={{marginTop:"20px"}}>
-      <Typography variant="h4" color="initial">Task Not Found :</Typography>
+    return <div style={{marginTop:"20px",marginLeft:"40px"}}>
+      <Typography variant="h4" color="initial" sx={{color:(mode)?'white':'black'}}>Task Not Found :</Typography>
       </div>
      
    if(TODOS.length)      
     return  <div style={{width:"50rem",marginTop:'60px'}}>
       <div style={{}}>
-      <Typography variant="h4" color="initial">Todo Lists</Typography>
+      <Typography variant="h4" color="initial"sx={{color:(mode)?'white':'black',marginLeft:"40px"}} >All Tasks :</Typography>
       </div>
      {TODOS.map((todo,key)=>(
-    <div key={key} style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:"#27d",marginTop:"10px",borderRadius:"0.4rem"}}>
-    <div  style={{backgroundColor:"#27d",padding:"37px",borderRadius:"0.4rem"}}>
-       <Typography variant="body1" color="white" sx={{fontSize:"1.4rem",textDecoration:todo.completed?'line-through':'none'}}>
+    <div key={key} style={{display:"flex",flexDirection:"row",justifyContent:"space-between",backgroundColor:(mode)?'white':'#27d' ,marginTop:"10px",borderRadius:"0.4rem"}}>
+    <div  style={{backgroundColor:(mode)?'white':'#27d',padding:"37px",borderRadius:"0.4rem"}}>
+       <Typography variant="body1" color="white" sx={{fontSize:"1.4rem",color:(mode)?'black':'white',textDecoration:todo.completed?'line-through':'none'}}>
        {todo.title} : {todo.description}
        </Typography>   
     </div>
     
-    <Button variant="contained" onClick={e=>deleteHandler(todo._id)} color="primary" style={{padding:"10px",height:"auto"}}>
+    <Button variant="contained" onClick={e=>deleteHandler(todo._id)} color="primary" style={{padding:"10px",height:"auto",backgroundColor:(mode)?'black':'#27d'}}>
         <DeleteForeverOutlinedIcon/>
       </Button>       
   </div>
