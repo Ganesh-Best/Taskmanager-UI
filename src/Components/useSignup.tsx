@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { BASE_URL } from './backend';
+import { useNavigate } from 'react-router-dom';
 
 function useSignup() {
 
@@ -8,6 +9,8 @@ function useSignup() {
 
     const [error,setError] = useState({});
     const [msg ,setMsg] = useState('')
+
+    const navigate = useNavigate();
     
     const signup = async({name,email,password}:{name:string;email:string;password:string})=>{
            setLoading(true);
@@ -18,9 +21,12 @@ function useSignup() {
              'Content-Type':'application/json'
              }})
                   
-              if(response.status == 201)
-                setMsg('Signup has been done successfully')
-               
+              if(response.status == 201){
+                setMsg('Signup has been done successfully , please verify you mail :')
+                setTimeout(() => {
+                     navigate('/signin');
+                }, 2000);  
+            }
               
      
     } catch (e) {

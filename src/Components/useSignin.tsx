@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { userInfo } from './Store/user';
 import { useSetRecoilState } from 'recoil';
 function useSignin(){
+    
     const setInfo  = useSetRecoilState(userInfo);                  
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(false);
     const [msg ,setMsg] = useState('')
     const navigate = useNavigate();
+
     const  signin = async({email,password}:{email:string;password:string})=>{
             setLoading(true);
     try {
