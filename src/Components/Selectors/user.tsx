@@ -1,6 +1,5 @@
-import { searchQuery, todos } from "../Store/todos";
 import { userInfo } from "../Store/user";
-import { selector, useRecoilValue  } from "recoil";
+import { selector } from "recoil";
 
 export const email =  selector({
     key:'email',

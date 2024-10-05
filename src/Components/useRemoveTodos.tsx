@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import  {  useState } from 'react';
 import Axios from 'axios';
 import { BASE_URL} from './backend';
 import useFetchTodo from './useFetchTodo';
-
+import { userInterface } from './Structure';
 
 function useRemoveTodos() {
    const [errors,setErrors] =useState(false);
@@ -10,8 +10,9 @@ function useRemoveTodos() {
 
    const [load,setLoad] =useState(false);
    
-   const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
-    let TOKEN : string ;
+   const userInfo : userInterface|null  =   localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo') as string )   : null ;
+   
+   let TOKEN : string ;
     
     if(userInfo)
        TOKEN = userInfo.token;
@@ -19,7 +20,7 @@ function useRemoveTodos() {
     const removeTodos = async()=>{
                       
           try {
-                             setLoad(true);
+                setLoad(true);
             const response = await Axios.delete(`${BASE_URL}/todo/todos`,{headers:{
                token:TOKEN
              }})

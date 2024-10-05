@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState,FC } from 'react'
 import Alert from '@mui/material/Alert';
 
-function Alertbox({msg}) {
+import { alertProps } from './Structure';
+
+const  Alertbox : FC<alertProps> = ({msg}) => {
  
-  const [show,setShow] = useState();
+  const [show,setShow] = useState<boolean>();
  
   const style = {
     marginTop:'20px',

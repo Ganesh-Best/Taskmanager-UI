@@ -1,15 +1,15 @@
 import {atom}  from 'recoil';
-
-export const todos = atom({
+import { todoInterface } from '../Structure'; 
+export const todos = atom<todoInterface[]|[]>({
     key:'todos',
-    default:[]
+    default: []
 })
-export const originalTodos = atom({
+export const originalTodos = atom<todoInterface[]|[]>({
     key:'originalTodos',
     default:[]
 })
 
-export const searchQuery = atom({
+export const searchQuery = atom<string>({
     key:'searchQuery',
     default:''
 })

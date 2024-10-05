@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Axios from 'axios';
 import { BASE_URL } from './backend';
 import { useNavigate } from 'react-router-dom';
 
 function useSignup() {
 
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState<boolean>(false);
 
-    const [error,setError] = useState({});
-    const [msg ,setMsg] = useState('')
+    const [error] = useState<object>();
+    const [msg ,setMsg] = useState<string>('')
 
     const navigate = useNavigate();
     
@@ -29,13 +29,13 @@ function useSignup() {
             }
               
      
-    } catch (e) {
+    } catch (e ) {
         console.log('error ',e)
-        if(e.status == 411)
+        if((e as any).status == 411)
          setMsg('All fields are required ')
-        else if(e.status == 302)
+        else if((e as any).status == 302)
          setMsg('User already exists:')
-        else if(e.code == 'ERR_NETWORK')
+        else if((e as any).code == 'ERR_NETWORK')
          setMsg('No internet  connection:');    
         
     }finally{

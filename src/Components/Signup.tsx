@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import Stack from '@mui/material/Stack';
+import  { useState ,FC } from 'react';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
@@ -11,16 +9,17 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alertbox from './Alertbox';
 
 
-function Signup() {
+
+const  Signup: FC = ()=> {
 
     const {loading,error,msg,signup} =useSignup();
-    const [name,setName] = useState('')
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-    const [cpassword,setCPassword] = useState('')
-    const [key,setKey] = useState(0);
+    const [name,setName] = useState<string>('')
+    const [email,setEmail] = useState<string>('')
+    const [password,setPassword] = useState<string>('')
+    const [cpassword,setCPassword] = useState<string>('')
+    const [key,setKey] = useState<number>(0);
 
-    const signupHandler = ()=>{
+    const signupHandler = (): void =>{
     
         
          if(password === cpassword)
@@ -35,10 +34,12 @@ function Signup() {
    
     
 
-  return (
+  return <>
  <div style={{display:'flex',justifyContent:'center'  }}>
      
-     <Card variant='outlined'    
+     <Card
+      component={'form'} 
+      variant='outlined'    
       sx={{ width:'430px',display:'flex',padding:'20px',flexDirection:'column',marginTop:'90px',height:'auto'}}
       noValidate
       autoComplete="on"
@@ -55,7 +56,7 @@ function Signup() {
        { key !=0  &&<Alertbox key={key} msg ={msg} />} 
     </Card>     
  </div>
-  )
+ </>
 }
 
 export default Signup

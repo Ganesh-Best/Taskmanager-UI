@@ -1,19 +1,15 @@
-import React, { ReactNode, useState } from 'react';
+import {FC} from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { userInfo } from './Store/user';
-import { email, name } from './Selectors/user';
+import {  name } from './Selectors/user';
 import Button from '@mui/material/Button'
 import { useNavigate} from 'react-router-dom';
 import useSetDetails from './useSetDetails';
@@ -122,16 +118,15 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 
-function Navbar() {
+const Navbar:FC = () => {
   // If we refesh set user details with vanished , so we need to set it if page got refreshed  
     useSetDetails(); 
    const  setQuery =  useSetRecoilState(searchQuery);
    const  setMode = useSetRecoilState(darkMode);
    const navigate =  useNavigate()    
-   const Email = useRecoilValue(email);
    const Name = useRecoilValue(name);
  
-   const signOutHandler = ()=>{
+   const signOutHandler = () : void =>{
 
        localStorage.removeItem('userInfo');
        navigate('/signin')
@@ -152,7 +147,7 @@ function Navbar() {
     components: {
       MuiButton: {
         styleOverrides: {
-          root: ({ theme }) => ({
+          root: () => ({
             // fontSize: "1.2rem", // Increase button font size
              padding: "10px 20px", // Custom padding
              borderRadius: 20, // Rounded corners for the button
@@ -171,7 +166,7 @@ function Navbar() {
     
   })
 
-  const changeMode = ()=>{
+  const changeMode = () :void =>{
     setMode(prev=>!prev);
     
     if(!mode)

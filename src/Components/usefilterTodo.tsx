@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { originalTodos, searchQuery, todos } from './Store/todos'
 
@@ -13,7 +13,7 @@ function usefilterTodo() {
     if(query){ 
         
         console.log(`usereffect query:`)
-        let filterTodos =  TODOS.filter((todo,index)=>todo.title.includes(query)||todo.description.includes(query))
+        let filterTodos =  TODOS.filter((todo)=>todo.title.includes(query)||todo.description.includes(query))
            
         console.log('filter todos',filterTodos);
         setTodos(filterTodos);

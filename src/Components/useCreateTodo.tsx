@@ -1,8 +1,8 @@
-import React, { useState ,useEffect} from 'react'
+import { useState } from 'react'
 import Axios from 'axios';
 import {BASE_URL} from './backend'
 import useFetchTodo from './useFetchTodo';
-
+import { userInterface } from './Structure';
 // this is custom hook that return createTodo function ,error and loading
 //createTodo function require two argument title and description for creating todo;  
 function useCreateTodo() {
@@ -10,7 +10,7 @@ function useCreateTodo() {
     const [loading ,setLoading] = useState(false); 
     const [error,setError] = useState(false);
     
-    const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
+    const userInfo : userInterface|null  =   localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo') as string )   : null ;
     let TOKEN : string ;
     
     if(userInfo)

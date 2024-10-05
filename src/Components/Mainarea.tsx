@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-
+import  { useState , FC } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Typography from '@mui/material/Typography';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-
 import useCreateTodo from './useCreateTodo';
 import CircularProgress from '@mui/material/CircularProgress';
 import useFetchTodo from './useFetchTodo';
 import useDeleteTodo from './useDeleteTodo';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue} from 'recoil';
 import { searchQuery, todos } from './Store/todos';
 import useRemoveTodos from './useRemoveTodos';
 import { countTodo } from './Selectors/counTodo';
@@ -21,11 +19,8 @@ import { darkMode } from './Store/theme';
 import usefilterTodo from './usefilterTodo';
 
 
-interface todo {
-  title:string;
-  description:string;
-}
-function Mainarea() {
+
+const  Mainarea : FC = () => {
   return (
     <div>
       <Navbar/>
@@ -35,18 +30,21 @@ function Mainarea() {
   )
 }
 
-function Addtodo(){
-    const {fetchTodos} = useFetchTodo();
-    const  {removeTodos,errors,load} = useRemoveTodos();
+const  Addtodo: FC = () =>{
+
+     useFetchTodo();
+
+    const  {removeTodos,load} = useRemoveTodos();
     const [title,setTitle] =useState<string>("");
     const [description,setDescription] = useState<string>("");
     const {createTodo,error,loading}    =   useCreateTodo();
-    const setTodos = useSetRecoilState(todos)
+    // const setTodos = useSetRecoilState(todos)
     const  totalTodos = useRecoilValue(countTodo);
     console.log('Before click on add todo :',error) 
 
     const mode = useRecoilValue(darkMode);
-    const darkTheme =createTheme({
+
+    const darkTheme = createTheme({
       palette: {
         mode: (mode)?'dark':'light',
         primary: {
@@ -56,7 +54,7 @@ function Addtodo(){
       components: {
         MuiButton: {
           styleOverrides: {
-            root: ({ theme }) => ({
+            root: () => ({
               // fontSize: "1.2rem", // Increase button font size
                padding: "10px 20px", // Custom padding
                borderRadius: 20, // Rounded corners for the button
@@ -101,7 +99,7 @@ function Addtodo(){
     })
 
    
-    const addTodo = ()=>{
+    const addTodo = () : void=>{
       
       if(title && description){
        createTodo(title,description);
@@ -113,10 +111,11 @@ function Addtodo(){
       setDescription('');
 
   }
+
    if(error)
      alert('unable to add todo')
 
-   const removeAllTodos = ()=>{
+   const removeAllTodos = (): void =>{
      console.log('remove button pressed :');
    
      //If there  task are there  then it will delete otherwise not:
@@ -134,14 +133,16 @@ function Addtodo(){
        {loading?<CircularProgress/>:<AddCircleOutlineIcon/>} 
      </Button>
      <Button variant="contained" color="primary" onClick={removeAllTodos} style={{height:'54px'}}>
-       {load?<CircularProgress color='white'/>:'Delete All'}       
+       {load?<CircularProgress sx={{ color:'white'}} />:'Delete All'}       
      </Button>
      </ThemeProvider>
     </div>
 }
 
-function Showtodo(){
-          usefilterTodo();             
+const  Showtodo: FC = ()=>{
+  
+  usefilterTodo();             
+  
   const mode = useRecoilValue(darkMode)
    
    useFetchTodo();
@@ -155,7 +156,7 @@ function Showtodo(){
   const {error1,loading1,deleteTodo}  = useDeleteTodo() ;
  
 
-  const deleteHandler = (id : string)=>{
+  const deleteHandler = (id : string) : void =>{
     
         deleteTodo(id)
 
@@ -190,7 +191,7 @@ function Showtodo(){
        </Typography>   
     </div>
     
-    <Button variant="contained" onClick={e=>deleteHandler(todo._id)} color="primary" style={{padding:"10px",height:"auto",backgroundColor:(mode)?'black':'#27d'}}>
+    <Button variant="contained" onClick={()=>deleteHandler(todo._id)} color="primary" style={{padding:"10px",height:"auto",backgroundColor:(mode)?'black':'#27d'}}>
         <DeleteForeverOutlinedIcon/>
       </Button>       
   </div>

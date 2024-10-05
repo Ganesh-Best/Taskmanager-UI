@@ -1,8 +1,9 @@
-import React, { useState ,useEffect } from 'react'
+import { useState ,useEffect } from 'react'
 import Axios from 'axios';
 import { BASE_URL} from './backend';
 import { originalTodos, todos } from './Store/todos';
 import { useSetRecoilState } from 'recoil';
+import { userInterface } from './Structure';
 
 function useFetchTodo() {
    const setTodos = useSetRecoilState(todos);
@@ -10,7 +11,7 @@ function useFetchTodo() {
    const [error,setError] = useState(false);
    const [loading,setLoading] = useState(true);
     
-   const userInfo :{name:string;email:string,token:string }|null  =   JSON.parse(localStorage.getItem('userInfo'))
+   const userInfo : userInterface|null  =   localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo') as string )   : null ;
     let TOKEN : string ;
     
     if(userInfo)
